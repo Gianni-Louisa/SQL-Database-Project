@@ -1,0 +1,48 @@
+/* ItemsView.css */
+.price-range-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+  }
+  
+  .price-range-slider {
+    width: calc(100% - 100px);
+  }
+  
+  .price-range-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .price-range-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .item-list-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .item-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: #f9f9f9;
+  }
+  
+  .item-name {
+    font-size: 18px;
+    color: #0056b3;
+  }
+  
+  .item-details {
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+  }
+  

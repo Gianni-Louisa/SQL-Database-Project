@@ -1,27 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import './App.css'; // Adjust the path based on your file structure
 
-function App() {
-  const [items, setItems] = useState([]);
+import SellersView from './Components/SellerView/SellersView'; // Component showing all sellers
+import ItemsView from './Components/ItemView/ItemsView'; // Component showing items with a price range slider
+import CustomersView from './Components/CustomersView/CustomersView.js'; // Component showing all customers
 
-  useEffect(() => {
-    fetch('http://localhost:3001/items') // Ensure the URL matches your server's URL and endpoint
-      .then(response => response.json())
-      .then(data => setItems(data))
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
+const App = () => {
+  const [view, setView] = useState('sellers'); // Default view
 
   return (
     <div>
-      <h1>Items</h1>
-      {items.map(item => (
-        <div key={item.ID}>
-          <p>Name: {item.Name}</p>
-          <p>Price: {item.Price}</p>
-          {/* Output other fields as needed */}
-        </div>
-      ))}
+      <nav>
+        <button onClick={() => setView('sellers')}>Sellers</button>
+        <button onClick={() => setView('items')}>Items</button>
+        <button onClick={() => setView('customers')}>Customers</button>
+      </nav>
+
+      {view === 'sellers' && <SellersView />}
+      {view === 'items' && <ItemsView />}
+      {view === 'customers' && <CustomersView />}
     </div>
   );
-}
+};
 
 export default App;

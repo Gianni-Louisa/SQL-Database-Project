@@ -1,0 +1,29 @@
+CREATE TABLE Items (
+    ItemID INT IDENTITY(1,1) PRIMARY KEY,
+    SellerID INT,
+    Name VARCHAR(255),
+    Price DECIMAL(10, 2),
+    Quantity INT,
+    CONSTRAINT FK_Items_Sellers FOREIGN KEY (SellerID) REFERENCES Sellers(SellerID)
+);
+CREATE TABLE Customers (
+    CustomerID INT IDENTITY(1,1) PRIMARY KEY,
+    Name VARCHAR(255),
+    Email VARCHAR(255) UNIQUE
+);
+CREATE TABLE Sellers (
+    SellerID INT IDENTITY(1,1) PRIMARY KEY,
+    Name VARCHAR(255),
+    Rating DECIMAL(3, 2)
+);
+INSERT INTO Sellers (Seller_Name, Rating) VALUES ('Seller One', 4.5);
+INSERT INTO Sellers (Seller_Name, Rating) VALUES ('Seller Two', 4.0);
+INSERT INTO Sellers (Seller_Name, Rating) VALUES ('Seller Three', 4.8);
+
+INSERT INTO Customers (Name, Email) VALUES ('John Doe', 'john.doe@email.com');
+INSERT INTO Customers (Name, Email) VALUES ('Jane Smith', 'jane.smith@email.com');
+INSERT INTO Customers (Name, Email) VALUES ('Alex Johnson', 'alex.j@email.com');
+
+INSERT INTO Items (SellerID, Name, Price, Quantity) VALUES (1, 'Gadget', 99.99, 10);
+INSERT INTO Items (SellerID, Name, Price, Quantity) VALUES (2, 'Widget', 29.99, 20);
+INSERT INTO Items (SellerID, Name, Price, Quantity) VALUES (3, 'Thingamajig', 19.99, 30);
