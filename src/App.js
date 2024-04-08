@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import './App.css'; // Adjust the path based on your file structure
+import './App.css'; 
 
-import SellersView from './Components/SellerView/SellersView'; // Component showing all sellers
-import ItemsView from './Components/ItemView/ItemsView'; // Component showing items with a price range slider
-import CustomersView from './Components/CustomersView/CustomersView.js'; // Component showing all customers
+import SellersView from './Components/SellerView/SellersView';
+import ItemsView from './Components/ItemView/ItemsView'; 
+import CustomersView from './Components/CustomersView/CustomersView.js'; 
 
 const App = () => {
-  const [view, setView] = useState('sellers'); // Default view
+  const [view, setView] = useState('sellers');
 
   return (
     <div>

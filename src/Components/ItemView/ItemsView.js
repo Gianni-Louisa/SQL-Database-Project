@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import PriceRangeSlider from './PriceRangeSlider'; // Your slider component
-import ItemList from './ItemList'; // Your component to list items
+import PriceRangeSlider from './PriceRangeSlider';
+import ItemList from './ItemList';
 
 const ItemsView = () => {
   const [items, setItems] = useState([]);
-  const [filterEnabled, setFilterEnabled] = useState(false); // New state for toggling filter
+  const [filterEnabled, setFilterEnabled] = useState(false);
 
-  // Function to fetch all items
   const fetchAllItems = () => {
-    fetch('http://localhost:3001/item') // Assuming /item returns all items
+    fetch('http://localhost:3001/item') 
       .then(response => response.json())
       .then(setItems)
       .catch(console.error);
@@ -17,7 +16,6 @@ const ItemsView = () => {
     fetchAllItems();
   }
 
-  // Function to fetch items in the price range
   const fetchItemsInRange = (minPrice, maxPrice) => {
     fetch(`http://localhost:3001/items/price-range?minPrice=${minPrice}&maxPrice=${maxPrice}`)
       .then(response => response.json())
@@ -25,14 +23,12 @@ const ItemsView = () => {
       .catch(console.error);
   };
 
-  // Toggle filter on or off and fetch items accordingly
   const toggleFilter = () => {
     setFilterEnabled(!filterEnabled);
     if (!filterEnabled) {
-      fetchAllItems(); // If turning filter off, fetch all items
+      fetchAllItems(); 
     }
-    // If turning the filter on, you might want to fetch with default range
-    // or you might just wait for the user to select a range with the slider
+
   };
 
   return (

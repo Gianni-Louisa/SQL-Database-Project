@@ -6,7 +6,6 @@ const ItemList = ({ items }) => {
     <div className="item-list">
       {items.map(item => (
         <div key={item.ItemID} className="item">
-          {/* Placeholder for item image or actual image if included */}
           <img src={item.imageUrl || '/placeholder-image.png'} alt="Item" className="item-image" />
           <div className="item-details">
             <h3 className="item-name">{item.Name}</h3>

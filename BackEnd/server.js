@@ -4,7 +4,7 @@ const sql = require('mssql/msnodesqlv8');
 const app = express();
 const port = 3001;
 
-app.use(express.json()); // Middleware to parse JSON bodies
+app.use(express.json());
 
 const config = {
   connectionString: 'Driver={ODBC Driver 17 for SQL Server};Server=(localdb)\\Local;Database=Items;Trusted_Connection=yes;',
@@ -98,10 +98,10 @@ app.get('/item', async (req, res) => {
     }
   });
 
-// Implementing a dynamic query: Find items within a specific price range
+
 // Example for items priced between $10 and $50
 app.get('/items/price-range', async (req, res) => {
-  const { minPrice, maxPrice } = req.query; // Expects query parameters ?minPrice=10&maxPrice=50
+  const { minPrice, maxPrice } = req.query;
   try {
     await sql.connect(config);
     const result = await new sql.Request().query(`
