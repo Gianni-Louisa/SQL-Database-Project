@@ -17,3 +17,6 @@ go to cd backend, and run npm install. AFTER go to cd my-react-app and run npm i
 
 now in cd backend run node ./server.js and open a new window for the front end (cd my-react-app) and run npm start.
 
+TO START
+in directory SQL, npm start
+in directory BACKEND, node ./server
