@@ -49,19 +49,19 @@ app.get('/items', async (req, res) => {
 
 
 // Endpoint to add a new seller
+// Endpoint to add a new seller
 app.post('/sellers', async (req, res) => {
   const { name, rating } = req.body;
   try {
-    await sql.connect(config);
-    await new sql.Request()
+    const pool = await poolPromise;
+    await pool.request()
          .query(`INSERT INTO Sellers (Name, Rating) VALUES ('${name}', ${rating})`);
     res.status(201).send('Seller added successfully');
   } catch (err) {
     res.status(500).send(err.message);
-  } finally {
-    await sql.close();
   }
 });
+
 
 // Endpoint to get all sellers
 app.get('/sellers', async (req, res) => {
@@ -98,7 +98,7 @@ app.get('/item', async (req, res) => {
     }
   });
 
-
+  
 // Example for items priced between $10 and $50
 app.get('/items/price-range', async (req, res) => {
   const { minPrice, maxPrice } = req.query;
@@ -107,6 +107,21 @@ app.get('/items/price-range', async (req, res) => {
     const result = await new sql.Request().query(`
       SELECT * FROM Items 
       WHERE Price BETWEEN ${minPrice} AND ${maxPrice};
+    `);
+    res.json(result.recordset);
+  } catch (err) {
+    res.status(500).send(err.message);
+  } finally {
+    await sql.close();
+  }
+});
+app.get('/items/seller-range', async (req, res) => {
+  const { minRating, maxRating } = req.query;
+  try {
+    await sql.connect(config);
+    const result = await new sql.Request().query(`
+      SELECT * FROM Items Join Sellers ON Items.SellerID=Sellers.SellerID
+      WHERE Rating BETWEEN ${minRating} AND ${maxRating};
     `);
     res.json(result.recordset);
   } catch (err) {

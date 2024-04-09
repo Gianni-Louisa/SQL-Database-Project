@@ -16,7 +16,7 @@ const SellersView = () => {
       <ul>
         {sellers.map((seller) => (
           <li key={seller.SellerID}>
-            {seller.Seller_Name} - Rating: {seller.Rating}
+            {seller.Name} - Rating: {seller.Rating}
           </li>
         ))}
       </ul>

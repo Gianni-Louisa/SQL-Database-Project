@@ -1,39 +1,39 @@
 import React, { useState } from 'react';
 
-const PriceRangeSlider = ({ onRangeSelect }) => {
-  const [minPrice, setMinPrice] = useState(10);
-  const [maxPrice, setMaxPrice] = useState(50);
+const PriceRangeSlider = ({ onRangeSelect, min, max, units }) => {
+  const [minPrice, setMinPrice] = useState(min);
+  const [maxPrice, setMaxPrice] = useState(max);
 
   const handleRangeChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'minPrice') {
-      setMinPrice(value);
-    } else if (name === 'maxPrice') {
-      setMaxPrice(value);
+    if (name === 'min') {
+      setMinPrice(Number(value));
+    } else if (name === 'max') {
+      setMaxPrice(Number(value));
     }
   };
 
   return (
     <div>
       <label>
-        Min Price: ${minPrice}
+        Min {units}{minPrice}
         <input
           type="range"
-          name="minPrice"
-          min="0"
-          max="100"
+          name="min"
+          min={min}
+          max={max}
           value={minPrice}
           onChange={handleRangeChange}
         />
       </label>
       <br />
       <label>
-        Max Price: ${maxPrice}
+        Max {units} {maxPrice}
         <input
           type="range"
-          name="maxPrice"
-          min="0"
-          max="100"
+          name="max"
+          min={min}
+          max={max}
           value={maxPrice}
           onChange={handleRangeChange}
         />
