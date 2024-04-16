@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./App.css";
 
 import SellersView from "./Components/SellerView/SellersView";
@@ -8,20 +8,39 @@ import LoginPage from "./Components/Login/Login.js";
 
 const App = () => {
   const [view, setView] = useState("sellers");
+  const viewContainerRef = useRef(null);
+
+  const changeView = (newView) => {
+    setView(newView);
+    setTimeout(() => {
+      viewContainerRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 300); // Adjust this timeout as needed
+  };
+  
 
   return (
-    <div>
-      <nav>
-        <button onClick={() => setView("sellers")}>Sellers</button>
-        <button onClick={() => setView("items")}>Items</button>
-        <button onClick={() => setView("customers")}>Customers</button>
-        <button onClick={() => setView("login")}>Login</button>
+    <div className="app">
+      <header className="app-header">
+        <div className="header-content">
+          <h1>Marketplace Hub</h1>
+          <p>Welcome to Marketplace Hub</p>
+          <p>Explore, Buy, Sell – Everything in One Place</p>
+          <button className="learn-more">Learn More</button>
+        </div>
+      </header>
+      <nav className="main-nav">
+        <button onClick={() => changeView("sellers")}>Sellers</button>
+        <button onClick={() => changeView("items")}>Items</button>
+        <button onClick={() => changeView("customers")}>Customers</button>
+        <button onClick={() => changeView("login")}>Login/Signup</button>
       </nav>
 
-      {view === "sellers" && <SellersView />}
-      {view === "items" && <ItemsView />}
-      {view === "customers" && <CustomersView />}
-      {view === "login" && <LoginPage />}
+      <div className="view-container" ref={viewContainerRef}>
+        {view === "sellers" && <SellersView />}
+        {view === "items" && <ItemsView />}
+        {view === "customers" && <CustomersView />}
+        {view === "login" && <LoginPage />}
+      </div>
     </div>
   );
 };

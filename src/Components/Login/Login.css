@@ -1,49 +1,59 @@
-/* LoginPage.css */
 .login-container {
-  display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: #f4f4f4;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0); /* Softer shadow for subtlety */
+
+  width: auto
+ 
 }
 
 .login-form {
-  padding: 20px;
+  width: 100%; /* Full width of its container, adjust to your preference */
+  max-width: 400px; /* Maximum width to keep the form reasonably sized */
+  padding: 40px; /* More padding for a roomier look */
   background: white;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Softer shadow for subtlety */
+  border-radius: 10px; /* More rounded corners for modern look */
+  margin: 0 auto; /* Auto margins for horizontal centering */
 }
 
 .login-form h1 {
-  text-align: center;
+  font-size: 24px; /* Larger font size for heading */
+  margin-bottom: 30px; /* More space after the heading */
+  font-weight: 300; /* Lighter font-weight */
 }
 
 .login-form label {
-  margin-top: 10px;
+  margin-top: 20px;
   display: block;
-  font-weight: bold;
+  font-weight: 600; /* Bolder than normal text for emphasis */
+  color: #555; /* Slightly lighter than the heading */
 }
 
 .login-form input {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  width: calc(100% - 20px); /* Subtract padding from the width */
+  padding: 12px 10px; /* Larger padding for touch friendliness */
+  margin-top: 10px;
+  box-sizing: border-box; /* No change here, keeps padding inside width */
+  border: 2px solid #ddd; /* Slightly thicker border with softer color */
+  border-radius: 6px; /* Rounded borders */
+  font-size: 16px; /* Larger font size */
 }
 
 .login-form button {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
+  width: calc(100% - 20px); /* Subtract padding from the width */
+  padding: 15px 10px; /* Larger padding for a more clickable button */
+  background-color: #0084ff; /* A more vibrant blue */
   color: white;
+  font-size: 16px; /* Larger font size for the button */
+  font-weight: bold; /* Bold text for the button */
   border: none;
-  border-radius: 4px;
-  margin-top: 15px;
-  cursor: pointer;
+  border-radius: 6px;
+  margin-top: 30px; /* More space before the button */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
 }
 
 .login-form button:hover {
-  background-color: #0056b3;
+  background-color: #0068d9; /* Slightly darker blue for hover */
 }

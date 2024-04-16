@@ -3,98 +3,122 @@ body, html {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f7f7f7;
 }
 
-nav {
-  background-color: #004d99;
-  padding: 20px 0;
+.app {
   display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  background-image: url('market.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+  height: 80vh;
+  padding: 60px 200px; /* Adjust the padding to match the height of your header image */
+  display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 20px;
+}
+.header-content {
+  max-width: 800px;
+  margin: auto;
+}
+.header-content h1 {
+  font-size: 48px; /* Large text for the main title */
+  margin-bottom: 10px;
+
+}
+
+.header-content p {
+  font-size: 20px; /* Slightly larger text for the subtitles */
+  margin-bottom: 5px;
+}
+.header-content h1, .header-content p {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+
+.learn-more {
+  background-color: #0066ff; /* A blue that stands out on the page */
+  color: white;
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.learn-more:hover {
+  background-color: #0055cc; /* A slightly darker blue for hover state */
+}
+
+.main-nav {
+  background-color: #333; /* A dark background for the nav to stand out */
+  padding: 0;
+  display: flex;
+  justify-content: space-around; /* Adjust based on the number of nav items */
+  align-items: center;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-button {
-  background-color: #ffffff;
-  color: #004d99;
-  border: 2px solid #ffffff;
-  padding: 10px 20px;
+.main-nav button {
+  background: none;
+  color: white;
+  border: none;
+  padding: 20px 30px;
   font-size: 16px;
   cursor: pointer;
-  border-radius: 5px;
-  transition: all 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
 }
 
-button:hover, button:focus {
-  background-color: #e7f0fd;
-  border-color: #cce0ff;
+.main-nav button:hover {
+  background-color: #555; /* Slightly lighter background for hover state */
 }
 
-.container {
+.view-container {
   padding: 20px;
   max-width: 1200px;
-  margin: 20px auto;
+  margin: auto;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-h2 {
-  color: #003366;
-  text-align: center;
-  margin: 20px 0;
+/* Continue with the rest of your styles... */
+.app-header:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay for better readability */
+  z-index: 1;
+}
+.main-nav button {
+  position: relative; /* Position the buttons relatively so z-index takes effect */
+  z-index: 3; /* Any number higher than the z-index of .header-content will work */
+  background: none;
+  color: white;
+  border: none;
+  padding: 20px 30px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  /* ... other styles ... */
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
 
-li {
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: #f9f9f9;
-  border-left: 5px solid #004d99;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+.header-content {
+  position: relative;
+  z-index: 2;
 }
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-.card {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  overflow: hidden;
-  transition: transform 0.2s ease-in-out;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
-
-.card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
-.card-content {
-  padding: 15px;
-}
-
-.card-title {
-  margin: 0;
-  color: #004d99;
-  font-size: 20px;
-}
-
-.card-text {
-  color: #666;
-  font-size: 14px;
+.learn-more {
+  border: 2px solid white; /* Add border to make the button stand out */
+  /* The rest of your button styles */
 }
