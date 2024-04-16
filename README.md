@@ -1,13 +1,7 @@
-Download Microsoft SQL Management Studio
+Add IP to Azure, under network
+In SSMS: ![image](https://github.com/Gianni-Louisa/SQL-Database-Project/assets/99772264/93fe29a8-3834-4b0f-9bc9-c72fcf335181)
 
-Download Microsoft Local DB
-  Just download local db. far right box.
-
-In CMD prompt put 'sqllocaldb create "Local"'
-
-Now open SSMS and put (localdb)\Local as the address and use microsoft authentication
-
-You will need to upload the db but we gotta see where we are at.
+Password is Rockchalk2025@
 
 Keep SSMS OPEN.
 
@@ -20,3 +14,4 @@ now in cd backend run node ./server.js and open a new window for the front end (
 TO START
 in directory SQL, npm start
 in directory BACKEND, node ./server
+
