@@ -4,10 +4,23 @@ const SellersView = () => {
   const [sellers, setSellers] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3001/sellers')
-      .then(response => response.json())
-      .then(setSellers)
-      .catch(console.error);
+    fetch('http://localhost:3001/sellers', {
+      method: 'GET',  // Optional, since GET is the default method
+      credentials: 'include',  // Necessary to include session cookies with the request
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(setSellers)
+    .catch(error => {
+      console.error('Failed to fetch sellers:', error);
+    });
   }, []);
 
   return (

@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 const CustomersView = () => {
   const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3001/customers')
-      .then(response => response.json())
+    fetch("http://localhost:3001/customers", {
+      credentials: "include", // Include this if your backend requires sessions
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
       .then(setCustomers)
-      .catch(console.error);
+      .catch((error) => console.error("Failed to load customers:", error));
   }, []);
 
   return (

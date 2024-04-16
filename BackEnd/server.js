@@ -1,133 +1,206 @@
-const express = require('express');
-const sql = require('mssql/msnodesqlv8');
+const express = require("express");
+const sql = require("mssql");
+const session = require("express-session");
+const bcrypt = require("bcryptjs"); // You will need bcryptjs to hash and compare hashed passwords
+const cors = require("cors");
 
 const app = express();
 const port = 3001;
-
 app.use(express.json());
 
+// Configuration for your Azure SQL database
 const config = {
-  connectionString: 'Driver={ODBC Driver 17 for SQL Server};Server=(localdb)\\Local;Database=Items;Trusted_Connection=yes;',
-  database: 'Items',
-  server: '(localdb)\\Local',
-  driver: 'msnodesqlv8',
+  user: "Jayhawk",
+  password: "Rockchalk2025@",
+  server: "eecs-447.database.windows.net", // Replace with your server name
+  database: "EECS 447 Final",
   options: {
-    trustedConnection: true
-  }
+    encrypt: true, // Required for Azure SQL
+    enableArithAbort: true,
+  },
 };
-
-// Create a global connection pool
-const poolPromise = new sql.ConnectionPool(config)
-  .connect()
-  .then(pool => {
-    console.log('Connected to MSSQL');
-    return pool;
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Adjust this to match your frontend's URL
+    credentials: true, // This allows the server to accept the session cookie from the client
   })
-  .catch(err => console.log('Database Connection Failed! Bad Config: ', err));
-
-// Enable CORS for cross-origin requests
+);
+app.use(
+  session({
+    secret: "your_secret_key",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: "auto", maxAge: 3600000 },
+  })
+);
+// Simplify and correct your CORS configuration
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // Allow only from React app
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.header("Access-Control-Allow-Credentials", "true"); // If you're using cookies/sessions
   next();
 });
 
-// Example endpoint using the connection pool
-app.get('/items', async (req, res) => {
+app.post("/register", async (req, res) => {
+  const { username, password } = req.body;
+  const hashedPassword = await bcrypt.hash(password, 8); // Hash the password with bcrypt
+
   try {
     const pool = await poolPromise;
-    const result = await pool.request().query(`
-      SELECT Items.ItemID, Items.Name, Items.Price, Items.Quantity, Sellers.Name AS SellerName, Sellers.Rating
-      FROM Items
-      INNER JOIN Sellers ON Items.SellerID = Sellers.SellerID;
-    `);
-    res.json(result.recordset);
+    await pool
+      .request()
+      .input("username", sql.VarChar, username)
+      .input("hashedPassword", sql.VarChar, hashedPassword)
+      .query(
+        "INSERT INTO Users (Username, Password) VALUES (@username, @hashedPassword)"
+      );
+
+    res.send("User registered successfully");
+  } catch (err) {
+    if (err.number === 2627) {
+      // Unique constraint error
+      res.status(400).send("Username already exists");
+    } else {
+      res.status(500).send(err.message);
+    }
+  }
+});
+
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const pool = await poolPromise;
+    const result = await pool
+      .request()
+      .input("username", sql.VarChar, username)
+      .query("SELECT * FROM Users WHERE Username = @username"); // Ensure you have a Users table with Username and Password columns
+
+    if (result.recordset.length > 0) {
+      const user = result.recordset[0];
+
+      // Compare submitted password with stored hash
+      const isMatch = await bcrypt.compare(password, user.Password);
+      if (isMatch) {
+        req.session.userId = user.Id; // Save user id in session
+        res.send("Logged in successfully!");
+      } else {
+        res.status(401).send("Authentication failed");
+      }
+    } else {
+      res.status(401).send("User not found");
+    }
   } catch (err) {
     res.status(500).send(err.message);
   }
 });
 
+app.post("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).send("Failed to logout");
+    }
+    res.send("Logged out successfully");
+  });
+});
 
+// Configure express-session
 
-// Endpoint to add a new seller
-// Endpoint to add a new seller
-app.post('/sellers', async (req, res) => {
+const poolPromise = new sql.ConnectionPool(config)
+  .connect()
+  .then((pool) => {
+    console.log("Connected to Azure MSSQL");
+    return pool;
+  })
+  .catch((err) => console.log("Database Connection Failed! Bad Config: ", err));
+
+// Middleware to check session
+function checkSession(req, res, next) {
+  if (req.session.userId) {
+    next();
+  } else {
+    res.status(401).send("Unauthorized");
+  }
+}
+
+// Require authentication for all routes
+
+// Add a new seller
+app.post("/sellers", checkSession, async (req, res) => {
   const { name, rating } = req.body;
   try {
     const pool = await poolPromise;
-    await pool.request()
-         .query(`INSERT INTO Sellers (Name, Rating) VALUES ('${name}', ${rating})`);
-    res.status(201).send('Seller added successfully');
+    await pool
+      .request()
+      .query(
+        `INSERT INTO Sellers (Name, Rating) VALUES ('${name}', ${rating})`
+      );
+    res.status(201).send("Seller added successfully");
   } catch (err) {
     res.status(500).send(err.message);
   }
 });
 
-
-// Endpoint to get all sellers
-app.get('/sellers', async (req, res) => {
+// Get all sellers
+app.get("/sellers", checkSession, async (req, res) => {
   try {
-    await sql.connect(config);
-    const result = await new sql.Request().query('SELECT * FROM Sellers');
+    const pool = await poolPromise;
+    const result = await pool.request().query("SELECT * FROM Sellers");
     res.json(result.recordset);
   } catch (err) {
     res.status(500).send(err.message);
-  } finally {
-    await sql.close();
   }
 });
-app.get('/item', async (req, res) => {
-    try {
-      await sql.connect(config);
-      const result = await new sql.Request().query('SELECT * FROM Items');
-      res.json(result.recordset);
-    } catch (err) {
-      res.status(500).send(err.message);
-    } finally {
-      await sql.close();
-    }
-  });
-  app.get('/customers', async (req, res) => {
-    try {
-      await sql.connect(config);
-      const result = await new sql.Request().query('SELECT * FROM Customers');
-      res.json(result.recordset);
-    } catch (err) {
-      res.status(500).send(err.message);
-    } finally {
-      await sql.close();
-    }
-  });
 
-  
-// Example for items priced between $10 and $50
-app.get('/items/price-range', async (req, res) => {
+// Get all items
+app.get("/item", checkSession, async (req, res) => {
+  try {
+    const pool = await poolPromise;
+    const result = await pool.request().query("SELECT * FROM Items");
+    res.json(result.recordset);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+// Get all customers
+app.get("/customers", checkSession, async (req, res) => {
+  try {
+    const pool = await poolPromise;
+    const result = await pool.request().query("SELECT * FROM Customers");
+    res.json(result.recordset);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+// Get items by price range
+app.get("/items/price-range", checkSession, async (req, res) => {
   const { minPrice, maxPrice } = req.query;
   try {
-    await sql.connect(config);
-    const result = await new sql.Request().query(`
+    const pool = await poolPromise;
+    const result = await pool.request().query(`
       SELECT * FROM Items 
       WHERE Price BETWEEN ${minPrice} AND ${maxPrice};
     `);
     res.json(result.recordset);
   } catch (err) {
     res.status(500).send(err.message);
-  } finally {
-    await sql.close();
   }
 });
-app.get('/items/seller-range', async (req, res) => {
+
+// Get items by seller rating range
+app.get("/items/seller-range", checkSession, async (req, res) => {
   const { minRating, maxRating } = req.query;
   try {
-    await sql.connect(config);
-    const result = await new sql.Request().query(`
+    const pool = await poolPromise;
+    const result = await pool.request().query(`
       SELECT * FROM Items Join Sellers ON Items.SellerID=Sellers.SellerID
       WHERE Rating BETWEEN ${minRating} AND ${maxRating};
     `);
     res.json(result.recordset);
   } catch (err) {
     res.status(500).send(err.message);
-  } finally {
-    await sql.close();
   }
 });
 
