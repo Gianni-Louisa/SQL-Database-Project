@@ -1,47 +1,139 @@
-.price-range-container {
-    display: flex;
-    justify-content: space-between;
-    margin: 20px 0;
-  }
-  
-  .price-range-slider {
-    width: calc(100% - 100px);
-  }
-  
-  .price-range-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .price-range-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .item-list-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-  }
-  
-  .item-card {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 15px;
-    background-color: #f9f9f9;
-  }
-  
-  .item-name {
-    font-size: 18px;
-    color: #0056b3;
-  }
-  
-  .item-details {
-    font-size: 14px;
-    color: #666;
-    margin-top: 10px;
-  }
-  
+.items-view-container {
+  display: block;
+  padding-top: 20px;
+}
+
+.filter-container {
+  float: left; /* Position it to the left */
+  width: 250px;
+  padding: 20px;
+  border-right: 1px solid #ccc; /* Visual separation */
+}
+
+.item-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  padding: 20px;
+  margin-left: 270px; /* Offset by the width of the filter container plus padding */
+}
+
+
+.item-list-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 columns */
+  gap: 20px;
+  padding: 20px;
+  align-items: start; /* Align items at the start of each cell */
+}
+
+
+
+
+.filter-container.show {
+  transform: translateX(0); /* Bring into view */
+}
+.filter-toggle-button {
+  background: none;
+  border: none;
+  color: #007bff; /* Adjust color to match your design */
+  cursor: pointer;
+  font-size: 24px; /* Adjust the size as needed */
+  padding: 0; /* Remove padding to reduce the button-like appearance */
+  transition: color 0.2s ease; /* Smooth transition for color */
+  outline: none; /* Removes the focus outline */
+  padding-bottom: 20px;
+}
+
+
+
+.filter-title {
+  margin-bottom: 2rem;
+  color: #333; /* Stylish dark grey text */
+}
+
+/* Custom range slider styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 10px; /* Increase the height of the track to ensure proper alignment */
+  background: #e6e6e6; /* Light grey track */
+  outline: none;
+  border-radius: 5px;
+  transition: background-color .2s ease-in-out;
+  margin: 0; /* Reset margin to avoid unexpected spacing */
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -6px; /* Adjust this value to correctly align the thumb with the track */
+  width: 20px;
+  height: 20px;
+  background: #007bff; /* Dark grey thumb */
+  cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid #fff; /* White border */
+  transition: background-color .2s, transform .2s;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #333;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%); /* Center the thumb in the track for Firefox */
+}
+
+input[type="range"]::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  background: #333;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  margin-top: 0; /* You may need to adjust this for IE/Edge */
+}
+
+/* Adjustments for the track */
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 10px;
+  background: #666;
+  border-radius: 5px;
+}
+
+input[type="range"]::-moz-range-track {
+  height: 10px;
+  background: #666;
+  border-radius: 5px;
+}
+
+input[type="range"]::-ms-track {
+  height: 10px;
+  background: #666;
+  border-radius: 5px;
+  border: none; /* Remove default border in IE/Edge */
+}
+
+
+/* Button to fetch items, styled in line with the monochrome theme */
+.fetch-items-button {
+  padding: 10px 20px;
+  margin-top: 1rem;
+  background-color: #333; /* Dark grey button background */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color .3s ease;
+}
+
+.fetch-items-button:hover {
+  background-color: #111; /* Darker grey on hover */
+}

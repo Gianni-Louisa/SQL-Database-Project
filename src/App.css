@@ -7,6 +7,7 @@ body, html {
 
 .app {
   display: flex;
+  height: 193vh;
   flex-direction: column;
 }
 
@@ -63,7 +64,8 @@ body, html {
   display: flex;
   justify-content: space-around; /* Adjust based on the number of nav items */
   align-items: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+ 
+  height: 8vh;
 }
 
 .main-nav button {
@@ -86,7 +88,7 @@ body, html {
   margin: auto;
   background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+
 }
 
 /* Continue with the rest of your styles... */
@@ -121,4 +123,19 @@ body, html {
 .learn-more {
   border: 2px solid white; /* Add border to make the button stand out */
   /* The rest of your button styles */
+}
+
+.items-view-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+
+.item-list-container {
+  flex-grow: 1;
+  margin-left: 20px; /* Slight margin from the left side of the viewport */
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* Five columns of equal width */
+  gap: 20px;
 }

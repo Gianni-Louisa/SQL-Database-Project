@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const PriceRangeSlider = ({ onRangeSelect, min, max, units }) => {
   const [minPrice, setMinPrice] = useState(min);
@@ -12,6 +12,9 @@ const PriceRangeSlider = ({ onRangeSelect, min, max, units }) => {
       setMaxPrice(Number(value));
     }
   };
+  useEffect(() => {
+    onRangeSelect(minPrice, maxPrice);
+  }, [maxPrice,minPrice]); // Fetch items whenever minRating changes
 
   return (
     <div>
@@ -39,7 +42,7 @@ const PriceRangeSlider = ({ onRangeSelect, min, max, units }) => {
         />
       </label>
       <br />
-      <button onClick={() => onRangeSelect(minPrice, maxPrice)}>Fetch Items</button>
+      
     </div>
   );
 };

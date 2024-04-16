@@ -69,12 +69,19 @@ function LoginPage() {
             />
           </div>
           <button type="submit">Login</button>
+          {!isLoggedIn && (
+        <p className="register-text">
+          Don't have an account? <a href="/register" onClick={handleLogout}>Register</a>
+        </p>
+      )}
         </form>
       ) : (
-        <div>
-          <h1>Welcome, {username}!</h1>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
+        
+          <div className="welcome-container">
+            <h1>Welcome, {username}!</h1>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
+       
       )}
     </div>
   );

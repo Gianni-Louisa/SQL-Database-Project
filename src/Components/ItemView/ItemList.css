@@ -1,41 +1,35 @@
 .item-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    padding: 20px;
-  }
-  
-  .item {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    width: 200px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  
-  .item-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
-  
-  .item-details {
-    padding: 10px;
-  }
-  
-  .item-name {
-    margin: 0;
-    font-size: 1.2rem;
-    color: #333;
-  }
-  
-  .item-price,
-  .item-quantity,
-  .item-seller {
-    font-size: 0.9rem;
-    color: #666;
-    margin: 5px 0;
-  }
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* Explicitly 5 columns */
+  gap: 20px;
+  padding: 20px;
+  justify-content: center; /* Centering items within the grid if the total width is less than the container */
+}
 
-  
+.item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  /* Ensure the width is controlled by the grid, not the content */
+}
+
+
+
+.item-details {
+  padding: 10px;
+}
+
+.item-name {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.item-price,
+.item-quantity,
+.item-seller {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 5px 0;
+}

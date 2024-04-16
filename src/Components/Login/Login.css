@@ -57,3 +57,59 @@
 .login-form button:hover {
   background-color: #0068d9; /* Slightly darker blue for hover */
 }
+
+.register-text {
+  font-size: 0.9rem; /* Slightly smaller than other text */
+  margin-top: 1rem; /* Space above the text */
+  color: #6c757d; /* Same color for consistency */
+  text-align: center; /* Centered text */
+}
+
+.register-text a {
+  color: #007bff; /* Use the primary blue color for links for consistency */
+  text-decoration: none; /* Removes underline from links */
+  transition: color 0.2s; /* Smooth color transition for hover effect */
+}
+
+.register-text a:hover,
+.register-text a:focus {
+  color: #0056b3; /* Darker blue on hover/focus for better visibility */
+  text-decoration: underline; /* Underline on hover/focus for better indication */
+}
+
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align the children */
+  justify-content: center; /* Vertically center in the viewport if desired */
+  padding: 2rem;
+  margin-top: 2rem; /* Add some space from the top */
+  background: #ffffff; /* Optional: a light background */
+  border-radius: 0.5rem; /* Optional: rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for depth */
+  width: 100%;
+  max-width: 400px; /* Match the login form width */
+}
+
+.welcome-container h1 {
+  font-size: 2.5rem; /* Larger font size */
+  font-weight: 500; /* Semi-bold */
+  color: #343a40; /* A strong, readable color */
+  margin-bottom: 1rem; /* Space before the logout button */
+}
+
+/* Adjustments for the logout button, if needed */
+.welcome-container button {
+  padding: 0.5rem 1rem; /* Comfortable padding */
+  font-size: 1rem;
+  color: #fff;
+  background-color: #dc3545; /* A color that indicates a 'logout' action */
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.welcome-container button:hover {
+  background-color: #c82333; /* A darker shade on hover */
+}

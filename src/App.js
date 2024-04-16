@@ -25,7 +25,7 @@ const App = () => {
           <h1>Marketplace Hub</h1>
           <p>Welcome to Marketplace Hub</p>
           <p>Explore, Buy, Sell – Everything in One Place</p>
-          <button className="learn-more">Learn More</button>
+          <button onClick={() => changeView("items")} className="learn-more" >Browse Items</button>
         </div>
       </header>
       <nav className="main-nav">
