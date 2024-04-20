@@ -153,7 +153,7 @@ app.get("/sellers", checkSession, async (req, res) => {
 });
 
 // Get all items
-app.get("/item", checkSession, async (req, res) => {
+app.get("/item", async (req, res) => {
   try {
     const pool = await poolPromise;
     const result = await pool.request().query("SELECT * FROM Items");
@@ -175,7 +175,7 @@ app.get("/customers", checkSession, async (req, res) => {
 });
 
 // Get items by price range
-app.get("/items/price-range", checkSession, async (req, res) => {
+app.get("/items/price-range", async (req, res) => {
   const { minPrice, maxPrice } = req.query;
   try {
     const pool = await poolPromise;
@@ -190,7 +190,7 @@ app.get("/items/price-range", checkSession, async (req, res) => {
 });
 
 // Get items by seller rating range
-app.get("/items/seller-range", checkSession, async (req, res) => {
+app.get("/items/seller-range", async (req, res) => {
   const { minRating, maxRating } = req.query;
   try {
     const pool = await poolPromise;
