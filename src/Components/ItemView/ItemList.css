@@ -1,27 +1,26 @@
-.item-list {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Explicitly 5 columns */
-  gap: 20px;
-  padding: 20px;
-  justify-content: center; /* Centering items within the grid if the total width is less than the container */
-}
-
 .item {
+  display: flex;
+  flex-direction: column;
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  /* Ensure the width is controlled by the grid, not the content */
+  height: 100%;
 }
 
-
+.item-image {
+  width: 100%; /* Ensures the image takes the full width of the card */
+  height: 150px; /* Fixed height for all images */
+  object-fit: cover; /* Ensures the image covers the area, might crop */
+}
 
 .item-details {
   padding: 10px;
+  flex: 1;
 }
 
 .item-name {
-  margin: 0;
+  margin-top: 0; /* Removes any top margin to align titles */
   font-size: 1.2rem;
   color: #333;
 }
@@ -32,4 +31,15 @@
   font-size: 0.9rem;
   color: #666;
   margin: 5px 0;
+}
+
+.add-to-cart {
+  margin-top: auto; /* Pushes the button to the bottom */
+  width: 100%; /* Makes the button extend full width of the card */
+  padding: 10px 0; /* Optional: Adds padding for better button appearance */
+  background-color: #007BFF; /* Optional: Adds background color */
+  color: white; /* Optional: Changes text color to white */
+  text-align: center; /* Optional: Centers the text within the button */
+  border: none; /* Optional: Removes border */
+  cursor: pointer; /* Optional: Changes cursor to pointer on hover */
 }

@@ -9,6 +9,7 @@ body, html {
   display: flex;
   height: 193vh;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .app-header {

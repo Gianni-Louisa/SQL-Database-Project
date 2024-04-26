@@ -47,6 +47,7 @@ const ItemsView = () => {
   const toggleFilter = () => {
     setFilterEnabled(!filterEnabled);
   };
+  
 
   return (
     <div className="items-view-container">
@@ -65,6 +66,7 @@ const ItemsView = () => {
        
       </div>
       <ItemList items={items} seller={seller} />
+      
     </div>
   );
 };
