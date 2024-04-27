@@ -1,7 +1,8 @@
 import React from 'react';
 import './ItemList.css'; // Ensure the CSS file is in the same directory
 
-const ItemList = ({ items, seller, screen }) => {
+
+const ItemList = ({ items, seller, screen, onItemDeleted }) => {
   const AddToCart = async (itemID, quantity) => {
     try {
       const response = await fetch('http://localhost:3001/cart', {
@@ -33,6 +34,27 @@ const ItemList = ({ items, seller, screen }) => {
     }
   };
 
+  const RemoveFromCart = async (itemID) => {
+    try {
+      const response = await fetch(`http://localhost:3001/cart/${itemID}`, {
+          method: 'DELETE',
+          credentials: 'include',
+      });
+
+      console.log(response);
+
+      if (response.ok) {
+          onItemDeleted();
+      } else {
+          const errorText = await response.text();  // Get more error details if not successful
+          throw new Error(errorText || 'Failed to remove item from cart');
+      }
+    } catch (error) {
+      console.error('Error removing item from cart:', error);
+      alert(error.message);
+    }
+  }
+
   return (
     <div className="item-list">
       {items.map(item => (
@@ -49,11 +71,18 @@ const ItemList = ({ items, seller, screen }) => {
             {item.Seller_Name && <p className="item-seller">Seller: {item.Seller_Name}</p>}
             {item.Seller_Name && <p className="item-seller">Rating: {seller.Rating}</p>}
             <button 
-              hidden={screen} 
+              hidden={screen === 'delete'} 
               className="add-to-cart" 
               onClick={() => AddToCart(item.ItemID, 1)} // Example assumes you want to add 1 quantity
             >
               Add to Cart
+            </button>
+            <button 
+              hidden={screen === 'add'} 
+              className="remove-from-cart" 
+              onClick={() => RemoveFromCart(item.CartID)} // Example assumes you want to remove the item
+            >
+              REMOVE
             </button>
           </div>
         </div>

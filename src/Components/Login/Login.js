@@ -43,6 +43,26 @@ function LoginPage() {
     }
   };
 
+  const handleRegister = async (event) => {
+    event.preventDefault(); // Prevent default form submission behavior
+
+    const response = await fetch("http://localhost:3001/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (response.ok) {
+      const message = await response.text();
+      alert(message); // Display success message
+    } else {
+      const error = await response.text();
+      alert(error); // Display error message
+    }
+  }
+
   return (
     <div className="login-container">
       {!isLoggedIn ? (
@@ -71,7 +91,7 @@ function LoginPage() {
           <button type="submit">Login</button>
           {!isLoggedIn && (
         <p className="register-text">
-          Don't have an account? <a href="/register" onClick={handleLogout}>Register</a>
+          Don't have an account? <a href="/register" onClick={handleRegister}>Register</a>
         </p>
       )}
         </form>

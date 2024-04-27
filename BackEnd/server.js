@@ -8,7 +8,6 @@ const app = express();
 const port = 3001;
 app.use(express.json());
 
-
 // Configuration for your Azure SQL database
 const config = {
   user: "Jayhawk",
@@ -205,59 +204,92 @@ app.get("/items/seller-range", async (req, res) => {
   }
 });
 app.post("/cart", checkSession, async (req, res) => {
-  const userId = 1;
+  const userId = req.session.userId;
   const { items } = req.body;
 
   console.log("Received items:", items);
   console.log("User ID:", userId);
 
   if (!items || !userId) {
-      return res.status(400).send("Missing items or user ID");
+    return res.status(400).send("Missing items or user ID");
   }
 
   try {
     // Use poolPromise to get the database pool from the promise
     const pool = await poolPromise;
-    await pool.request()
-      .input('ItemID', sql.Int, items.ItemID)
-      .input('Quantity', sql.Int, items.Quantity)
-      .input('UserID', sql.Int, userId)
-      .query('INSERT INTO Cart (ItemID, Quantity, UserID) VALUES (@ItemID, @Quantity, @UserID)');
+    await pool
+      .request()
+      .input("ItemID", sql.Int, items.ItemID)
+      .input("Quantity", sql.Int, items.Quantity)
+      .input("UserID", sql.Int, userId)
+      .query(
+        "INSERT INTO Cart (ItemID, Quantity, UserID) VALUES (@ItemID, @Quantity, @UserID)"
+      );
 
     res.status(201).send("Item added to cart successfully");
   } catch (err) {
-      console.error("Error when adding to cart:", err);
-      res.status(500).send(err.message);
+    console.error("Error when adding to cart:", err);
+    res.status(500).send(err.message);
   }
 });
 
+app.delete("/cart/:itemID", checkSession, async (req, res) => {
+  const userId = req.session.userId;
+  const itemID = req.params.itemID;
+
+  console.log("Removing item ID:", itemID, "from cart for User ID:", userId);
+
+  if (!itemID || !userId) {
+    return res.status(400).send("Item ID or user ID is missing");
+  }
+
+  try {
+    const pool = await poolPromise;
+    const result = await pool
+      .request()
+      .input("ItemID", sql.Int, itemID)
+      .input("UserID", sql.Int, userId)
+      .query("DELETE FROM Cart WHERE CartID = @ItemID AND UserID = @UserID");
+
+    if (result.rowsAffected.length > 0) {
+      res.send("Item removed from cart successfully");
+    } else {
+      res.status(404).send("Item not found in the cart");
+    }
+  } catch (err) {
+    console.error("Error removing item from cart:", err);
+    res.status(500).send(err.message);
+  }
+});
 
 app.get("/cart", checkSession, async (req, res) => {
-  const userId = 1;  // Assuming `user` is the field where you store the userId in session
+  const userId = req.session.userId; // Assuming `user` is the field where you store the userId in session
 
   console.log("Fetching cart for User ID:", userId);
 
   if (!userId) {
-      return res.status(400).send("User ID is missing or not authenticated");
+    return res.status(400).send("User ID is missing or not authenticated");
   }
 
   try {
-      const pool = await poolPromise;
-      const result = await pool.request()
-          .input('UserID', sql.Int, userId)
-          .query('SELECT * FROM Cart JOIN Items ON Cart.ItemID = Items.ItemID WHERE Cart.UserID = @UserID');
+    const pool = await poolPromise;
+    const result = await pool
+      .request()
+      .input("UserID", sql.Int, userId)
+      .query(
+        "SELECT * FROM Cart JOIN Items ON Cart.ItemID = Items.ItemID WHERE Cart.UserID = @UserID"
+      );
 
-      if (result.recordset.length > 0) {
-          res.json(result.recordset);
-      } else {
-          res.status(404).send("No items found in the cart for this user.");
-      }
+    if (result.recordset.length > 0) {
+      res.json(result.recordset);
+    } else {
+      res.status(404).send("No items found in the cart for this user.");
+    }
   } catch (err) {
-      console.error("Error fetching cart items:", err);
-      res.status(500).send(err.message);
+    console.error("Error fetching cart items:", err);
+    res.status(500).send(err.message);
   }
 });
-
 
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);

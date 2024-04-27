@@ -43,3 +43,16 @@
   border: none; /* Optional: Removes border */
   cursor: pointer; /* Optional: Changes cursor to pointer on hover */
 }
+.remove-from-cart{
+  margin-top: auto; /* Pushes the button to the bottom */
+  width: 100%; /* Makes the button extend full width of the card */
+  padding: 10px 0; /* Optional: Adds padding for better button appearance */
+  background-color: red; /* Optional: Adds background color */
+  color: white; /* Optional: Changes text color to white */
+  text-align: center; /* Optional: Centers the text within the button */
+  border: none; /* Optional: Removes border */
+  cursor: pointer; /* Optional: Changes cursor to pointer on hover */
+}
+.remove-from-cart:hover{
+  background-color: #910000;
+}

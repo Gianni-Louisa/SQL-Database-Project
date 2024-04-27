@@ -32,15 +32,13 @@ const App = () => {
       <nav className="main-nav">
         <button onClick={() => changeView("sellers")}>Sellers</button>
         <button onClick={() => changeView("items")}>Items</button>
-        <button onClick={() => changeView("customers")}>Customers</button>
-        <button onClick={() => changeView("login")}>Login/Signup</button>
         <button onClick={() => changeView("Cart")}>Cart</button>
+        <button onClick={() => changeView("login")}>Login/Signup</button>
       </nav>
 
       <div className="view-container" ref={viewContainerRef}>
         {view === "sellers" && <SellersView />}
         {view === "items" && <ItemsView />}
-        {view === "customers" && <CustomersView />}
         {view === "login" && <LoginPage />}
         {view === "Cart" && <Cart />}
       </div>

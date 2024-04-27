@@ -65,7 +65,7 @@ const ItemsView = () => {
 
        
       </div>
-      <ItemList items={items} seller={seller} />
+      <ItemList items={items} seller={seller} screen={'add'} />
       
     </div>
   );
