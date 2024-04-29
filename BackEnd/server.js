@@ -1,28 +1,27 @@
 const express = require("express");
 const sql = require("mssql");
 const session = require("express-session");
-const bcrypt = require("bcryptjs"); // You will need bcryptjs to hash and compare hashed passwords
+const bcrypt = require("bcryptjs"); 
 const cors = require("cors");
 
 const app = express();
 const port = 3001;
 app.use(express.json());
 
-// Configuration for your Azure SQL database
 const config = {
   user: "Jayhawk",
   password: "Rockchalk2025@",
-  server: "eecs-447.database.windows.net", // Replace with your server name
+  server: "eecs-447.database.windows.net", 
   database: "EECS 447 Final",
   options: {
-    encrypt: true, // Required for Azure SQL
+    encrypt: true, 
     enableArithAbort: true,
   },
 };
 app.use(
   cors({
-    origin: "http://localhost:3000", // Adjust this to match your frontend's URL
-    credentials: true, // This allows the server to accept the session cookie from the client
+    origin: "http://localhost:3000", 
+    credentials: true,
   })
 );
 app.use(
@@ -33,17 +32,17 @@ app.use(
     cookie: { secure: "auto", maxAge: 3600000 },
   })
 );
-// Simplify and correct your CORS configuration
+
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // Allow only from React app
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); 
   res.header("Access-Control-Allow-Headers", "Content-Type");
-  res.header("Access-Control-Allow-Credentials", "true"); // If you're using cookies/sessions
+  res.header("Access-Control-Allow-Credentials", "true"); 
   next();
 });
 
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 8); // Hash the password with bcrypt
+  const hashedPassword = await bcrypt.hash(password, 8); 
 
   try {
     const pool = await poolPromise;
@@ -58,7 +57,6 @@ app.post("/register", async (req, res) => {
     res.send("User registered successfully");
   } catch (err) {
     if (err.number === 2627) {
-      // Unique constraint error
       res.status(400).send("Username already exists");
     } else {
       res.status(500).send(err.message);
@@ -74,15 +72,13 @@ app.post("/login", async (req, res) => {
     const result = await pool
       .request()
       .input("username", sql.VarChar, username)
-      .query("SELECT * FROM Users WHERE Username = @username"); // Ensure you have a Users table with Username and Password columns
-
+      .query("SELECT * FROM Users WHERE Username = @username"); 
     if (result.recordset.length > 0) {
       const user = result.recordset[0];
 
-      // Compare submitted password with stored hash
       const isMatch = await bcrypt.compare(password, user.Password);
       if (isMatch) {
-        req.session.userId = user.Id; // Save user id in session
+        req.session.userId = user.Id; 
         res.send("Logged in successfully!");
       } else {
         res.status(401).send("Authentication failed");
@@ -104,7 +100,6 @@ app.post("/logout", (req, res) => {
   });
 });
 
-// Configure express-session
 
 const poolPromise = new sql.ConnectionPool(config)
   .connect()
@@ -114,7 +109,6 @@ const poolPromise = new sql.ConnectionPool(config)
   })
   .catch((err) => console.log("Database Connection Failed! Bad Config: ", err));
 
-// Middleware to check session
 function checkSession(req, res, next) {
   if (req.session.userId) {
     next();
@@ -123,7 +117,6 @@ function checkSession(req, res, next) {
   }
 }
 
-// Require authentication for all routes
 
 // Add a new seller
 app.post("/sellers", checkSession, async (req, res) => {
@@ -215,7 +208,6 @@ app.post("/cart", checkSession, async (req, res) => {
   }
 
   try {
-    // Use poolPromise to get the database pool from the promise
     const pool = await poolPromise;
     await pool
       .request()
@@ -263,7 +255,7 @@ app.delete("/cart/:itemID", checkSession, async (req, res) => {
 });
 
 app.get("/cart", checkSession, async (req, res) => {
-  const userId = req.session.userId; // Assuming `user` is the field where you store the userId in session
+  const userId = req.session.userId; 
 
   console.log("Fetching cart for User ID:", userId);
 
