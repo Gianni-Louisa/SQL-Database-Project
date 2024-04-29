@@ -94,7 +94,10 @@ function LoginPage() {
           Don't have an account? <a href="/register" onClick={handleRegister}>Register</a>
         </p>
       )}
+        
+        <button onClick={handleLogout}>Logout</button>
         </form>
+
       ) : (
         
           <div className="welcome-container">
