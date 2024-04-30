@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/SQL-Database-Project/static/css/main.352d78e3.css",
-    "main.js": "/SQL-Database-Project/static/js/main.0b345da3.js",
+    "main.js": "/SQL-Database-Project/static/js/main.987d579a.js",
     "static/js/453.ed3810f9.chunk.js": "/SQL-Database-Project/static/js/453.ed3810f9.chunk.js",
     "static/media/market.jpg": "/SQL-Database-Project/static/media/market.26d972f2d65afdf844d9.jpg",
     "static/media/Waterproof Bluetooth Speaker.png": "/SQL-Database-Project/static/media/Waterproof Bluetooth Speaker.92bdfea51595be302c86.png",
     "index.html": "/SQL-Database-Project/index.html",
     "main.352d78e3.css.map": "/SQL-Database-Project/static/css/main.352d78e3.css.map",
-    "main.0b345da3.js.map": "/SQL-Database-Project/static/js/main.0b345da3.js.map",
+    "main.987d579a.js.map": "/SQL-Database-Project/static/js/main.987d579a.js.map",
     "453.ed3810f9.chunk.js.map": "/SQL-Database-Project/static/js/453.ed3810f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.352d78e3.css",
-    "static/js/main.0b345da3.js"
+    "static/js/main.987d579a.js"
   ]
 }
