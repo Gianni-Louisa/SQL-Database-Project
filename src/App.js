@@ -22,8 +22,8 @@ const App = () => {
     <div className="app">
       <header className="app-header">
         <div className="header-content">
-          <h1>Marketplace Hub</h1>
-          <p>Welcome to Marketplace Hub</p>
+          <h1>The Digital Store</h1>
+          <p>Welcome to the Digital Store!</p>
           <p>Explore, Buy, Sell – Everything in One Place</p>
           <button onClick={() => changeView("items")} className="learn-more" >Browse Items</button>
         </div>
