@@ -36,7 +36,7 @@ const SellersView = () => {
       <div className="item-list-container">
         {items.map((item) => (
           <div key={item.SellerID} className="item-card">
-            <div className="item-name">{item.Name}</div>
+            <div className="item-name">{item.Name[1]}</div>
             <div className="item-details">Rating: {item.Rating}</div>
           </div>
         ))}

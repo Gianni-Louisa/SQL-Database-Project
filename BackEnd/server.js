@@ -5,8 +5,9 @@ const bcrypt = require("bcryptjs");
 const cors = require("cors");
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3000;
 app.use(express.json());
+app.set('trust proxy', 1);
 
 const config = {
   user: "Jayhawk",
@@ -18,23 +19,26 @@ const config = {
     enableArithAbort: true,
   },
 };
-app.use(
-  cors({
-    origin: "http://localhost:3000", 
-    credentials: true,
-  })
-);
-app.use(
-  session({
-    secret: "your_secret_key",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: "auto", maxAge: 3600000 },
-  })
-);
+
+app.use(cors({
+  origin: 'https://gianni-louisa.github.io',
+  credentials: true
+}));
+
+app.use(session({
+  secret: "key",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    secure: true,
+    sameSite: 'None', 
+    maxAge: 3600000 
+  }
+}));
+
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); 
+  res.header("Access-Control-Allow-Origin", "https://gianni-louisa.github.io"); 
   res.header("Access-Control-Allow-Headers", "Content-Type");
   res.header("Access-Control-Allow-Credentials", "true"); 
   next();
@@ -113,6 +117,7 @@ function checkSession(req, res, next) {
   if (req.session.userId) {
     next();
   } else {
+    console.log("Unauthorized access:", req.session.userId);
     res.status(401).send("Unauthorized");
   }
 }
