@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.089b46ae.css",
+    "main.js": "/static/js/main.13f5c70b.js",
+    "static/js/453.ed3810f9.chunk.js": "/static/js/453.ed3810f9.chunk.js",
+    "static/media/market.jpg": "/static/media/market.26d972f2d65afdf844d9.jpg",
+    "static/media/Waterproof Bluetooth Speaker.png": "/static/media/Waterproof Bluetooth Speaker.92bdfea51595be302c86.png",
+    "index.html": "/index.html",
+    "main.089b46ae.css.map": "/static/css/main.089b46ae.css.map",
+    "main.13f5c70b.js.map": "/static/js/main.13f5c70b.js.map",
+    "453.ed3810f9.chunk.js.map": "/static/js/453.ed3810f9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.089b46ae.css",
+    "static/js/main.13f5c70b.js"
+  ]
+}
