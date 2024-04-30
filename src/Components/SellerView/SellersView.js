@@ -5,7 +5,7 @@ const SellersView = () => {
   const [minRating, setMinRating] = useState(1); // Assuming the rating starts at 1
 
   const fetchItemsInRangeRating = (min) => {
-    fetch(`http://localhost:3001/items/seller-range?minRating=${min}&maxRating=5`, {
+    fetch(`https://nodejs-server-447-d8a11fc1af75.herokuapp.com/items/seller-range?minRating=${min}&maxRating=5`, {
       credentials: 'include',
     })
       .then((response) => response.json())

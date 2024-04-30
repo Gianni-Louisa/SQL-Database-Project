@@ -10,7 +10,7 @@ const ItemsView = () => {
   
   useEffect(() => {
     if (!filterEnabled) {
-      fetch("http://localhost:3001/item", {
+      fetch("https://nodejs-server-447-d8a11fc1af75.herokuapp.com/item", {
         credentials: "include",
       })
         .then(response => response.json())
@@ -21,7 +21,7 @@ const ItemsView = () => {
 
   useEffect(() => {
     if (!filterEnabled) {
-      fetch("http://localhost:3001/seller", {
+      fetch("https://nodejs-server-447-d8a11fc1af75.herokuapp.com/seller", {
         credentials: "include",
       })
         .then(response => response.json())
@@ -34,7 +34,7 @@ const ItemsView = () => {
   
 
   const fetchItemsInRange = (min, max) => {
-    fetch(`http://localhost:3001/items/price-range?minPrice=${min}&maxPrice=${max}`, {
+    fetch(`https://nodejs-server-447-d8a11fc1af75.herokuapp.com/items/price-range?minPrice=${min}&maxPrice=${max}`, {
       credentials: "include",
     })
       .then(response => response.json())

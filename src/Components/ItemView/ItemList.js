@@ -5,7 +5,7 @@ import './ItemList.css'; // Ensure the CSS file is in the same directory
 const ItemList = ({ items, seller, screen, onItemDeleted }) => {
   const AddToCart = async (itemID, quantity) => {
     try {
-      const response = await fetch('http://localhost:3001/cart', {
+      const response = await fetch('https://nodejs-server-447-d8a11fc1af75.herokuapp.com/cart', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ const ItemList = ({ items, seller, screen, onItemDeleted }) => {
 
   const RemoveFromCart = async (itemID) => {
     try {
-      const response = await fetch(`http://localhost:3001/cart/${itemID}`, {
+      const response = await fetch(`https://nodejs-server-447-d8a11fc1af75.herokuapp.com/cart/${itemID}`, {
           method: 'DELETE',
           credentials: 'include',
       });

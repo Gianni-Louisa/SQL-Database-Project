@@ -6,7 +6,7 @@ export const Cart = () => {
   
   // Method to fetch items from the cart
   const fetchCartItems = () => {
-      fetch("http://localhost:3001/cart", {
+      fetch("https://nodejs-server-447-d8a11fc1af75.herokuapp.com/cart", {
           credentials: "include",
       })
       .then(response => response.json())

@@ -4,7 +4,7 @@ const CustomersView = () => {
   const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/customers", {
+    fetch("https://nodejs-server-447-d8a11fc1af75.herokuapp.com/customers", {
       credentials: "include", // Include this if your backend requires sessions
     })
       .then((response) => {
