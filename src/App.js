@@ -3,7 +3,6 @@ import "./App.css";
 
 import SellersView from "./Components/SellerView/SellersView";
 import ItemsView from "./Components/ItemView/ItemsView";
-import CustomersView from "./Components/CustomersView/CustomersView.js";
 import LoginPage from "./Components/Login/Login.js";
 import Cart from "./Components/Cart/Cart.js";
 
