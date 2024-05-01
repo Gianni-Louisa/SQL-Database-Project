@@ -45,4 +45,5 @@ const SellersView = () => {
   );
 };
 
+
 export default SellersView;
