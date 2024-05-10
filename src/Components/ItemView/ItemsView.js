@@ -31,8 +31,6 @@ const ItemsView = () => {
   }, [filterEnabled]);
 
 
-  
-
   const fetchItemsInRange = (min, max) => {
     fetch(`https://nodejs-server-447-d8a11fc1af75.herokuapp.com/items/price-range?minPrice=${min}&maxPrice=${max}`, {
       credentials: "include",
@@ -41,13 +39,6 @@ const ItemsView = () => {
       .then(setItems)
       .catch(console.error);
   };
-
-
-
-  const toggleFilter = () => {
-    setFilterEnabled(!filterEnabled);
-  };
-  
 
   return (
     <div className="items-view-container">
